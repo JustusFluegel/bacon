@@ -3,6 +3,8 @@ use {
     serde::Deserialize,
 };
 
+use std::collections::HashMap;
+
 /// One of the possible job that bacon can run
 #[derive(Debug, Clone, Deserialize)]
 pub struct Job {
@@ -11,6 +13,10 @@ pub struct Job {
     /// This vector is guaranteed not empty
     /// by the PackageConfig::from_path loader
     pub command: Vec<String>,
+
+    /// A list of enviroment arguments to set while executing the command
+    #[serde(default)]
+    pub env_args: HashMap<String, String>,
 
     /// A list of directories that will be watched if the job
     /// is run on a package.
@@ -69,6 +75,7 @@ impl Job {
             allow_warnings: false,
             allow_failures: false,
             apply_gitignore: None,
+            env_args: HashMap::new(),
         }
     }
 }

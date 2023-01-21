@@ -185,6 +185,9 @@ impl<'s> Mission<'s> {
                 command.arg(arg);
             }
         }
+        for (var_name, contents) in &self.job.env_args {
+            command.env(var_name, contents);
+        }
         if self.settings.no_default_features && !no_default_features_done {
             command.arg("--no-default-features");
         }
